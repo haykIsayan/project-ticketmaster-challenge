@@ -19,13 +19,13 @@ class DiscoverEventsViewModel @Inject constructor(
     private val ticketmasterRepository: TicketmasterRepository,
 ) : ViewModel() {
 
-    init {
-        loadDiscoverEvents()
-    }
-
     private val _discoverEvents = MutableLiveData<ViewModelState<List<EventModel>>>()
 
     fun getDiscoverEvents(): LiveData<ViewModelState<List<EventModel>>> = _discoverEvents
+
+    init {
+        loadDiscoverEvents()
+    }
 
     private fun loadDiscoverEvents() {
         viewModelScope.launch(Dispatchers.IO) {
