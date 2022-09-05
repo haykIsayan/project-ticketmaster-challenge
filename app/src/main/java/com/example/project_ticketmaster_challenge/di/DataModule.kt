@@ -1,13 +1,14 @@
 package com.example.project_ticketmaster_challenge.di
 
-import com.example.project_ticketmaster_challenge.data.MockTicketmasterDataSource
-import com.example.project_ticketmaster_challenge.data.TicketmasterApi
-import com.example.project_ticketmaster_challenge.data.TicketmasterDataSource
-import com.example.project_ticketmaster_challenge.data.TicketmasterRepository
+import android.content.Context
+import com.example.project_ticketmaster_challenge.R
+import com.example.project_ticketmaster_challenge.data.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -18,10 +19,16 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun provideTicketmasterApi(): TicketmasterApi {
+    fun provideTicketmasterApi(@ApplicationContext context: Context): TicketmasterApi {
+        val apiKey = context.resources.getString(R.string.ticketmaster_api_key)
+        val baseUrl = context.resources.getString(R.string.ticketmaster_api_base_url)
+        val client = OkHttpClient.Builder()
+            .addInterceptor(TicketmasterClientInterceptor(apiKey))
+            .build()
         return Retrofit.Builder()
-            .baseUrl("https://app.ticketmaster.com/")
+            .baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create())
+            .client(client)
             .build()
             .create(TicketmasterApi::class.java)
     }

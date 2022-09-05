@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="ticketmaster_api_key">DW0E98NrxUIfDDtNN7ijruVSm60ryFLX</string>
-    <string name="ticketmaster_api_base_url">https://app.ticketmaster.com/discovery/v2/</string>
+    <string name="ticketmaster_api_base_url">https://app.ticketmaster.com/</string>
 </resources>
