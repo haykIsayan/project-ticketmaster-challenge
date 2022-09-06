@@ -1,4 +1,4 @@
-package com.example.project_ticketmaster_challenge.ui
+package com.example.project_ticketmaster_challenge.ui.discover
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.project_ticketmaster_challenge.R
 import com.example.project_ticketmaster_challenge.model.EventModel
 
-class DiscoverEventsAdapter: RecyclerView.Adapter<DiscoverEventsViewHolder>() {
+class DiscoverAdapter: RecyclerView.Adapter<DiscoverItemViewHolder>() {
 
     private val discoverEvents = mutableListOf<EventModel>()
 
@@ -16,16 +16,16 @@ class DiscoverEventsAdapter: RecyclerView.Adapter<DiscoverEventsViewHolder>() {
         notifyItemRangeChanged(0, discoverEvents.size - 1)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DiscoverEventsViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DiscoverItemViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(
             R.layout.discover_event_item_view,
             parent,
             false,
         )
-       return DiscoverEventsViewHolder(itemView)
+       return DiscoverItemViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: DiscoverEventsViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: DiscoverItemViewHolder, position: Int) {
         val event = discoverEvents[position]
         holder.bindEvent(event)
     }

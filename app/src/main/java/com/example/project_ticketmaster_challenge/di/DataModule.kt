@@ -3,6 +3,8 @@ package com.example.project_ticketmaster_challenge.di
 import android.content.Context
 import com.example.project_ticketmaster_challenge.R
 import com.example.project_ticketmaster_challenge.data.*
+import com.example.project_ticketmaster_challenge.data.network.TicketmasterApi
+import com.example.project_ticketmaster_challenge.data.network.TicketmasterClientInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

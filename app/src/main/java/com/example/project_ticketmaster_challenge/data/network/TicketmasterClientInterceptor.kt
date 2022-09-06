@@ -1,4 +1,4 @@
-package com.example.project_ticketmaster_challenge.data
+package com.example.project_ticketmaster_challenge.data.network
 
 import okhttp3.Interceptor
 import okhttp3.Response
