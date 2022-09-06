@@ -8,12 +8,14 @@ data class EventModel(
     val name: String,
     val type: String,
     val images: List<ImageModel>,
+    val classifications: List<ClassificationModel>
 ): Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString() ?: "",
         parcel.readString() ?: "",
         parcel.readString() ?: "",
-        parcel.createTypedArrayList(ImageModel) ?: emptyList()
+        parcel.createTypedArrayList(ImageModel) ?: emptyList(),
+        parcel.createTypedArrayList(ClassificationModel) ?: emptyList()
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
