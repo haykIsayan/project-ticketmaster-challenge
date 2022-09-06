@@ -1,4 +1,4 @@
-package com.example.project_ticketmaster_challenge.ui
+package com.example.project_ticketmaster_challenge.ui.discover
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.project_ticketmaster_challenge.data.TicketmasterRepository
 import com.example.project_ticketmaster_challenge.model.EventModel
+import com.example.project_ticketmaster_challenge.ui.ViewModelState
 import com.example.project_ticketmaster_challenge.ui.ViewModelState.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -15,13 +16,13 @@ import retrofit2.HttpException
 import javax.inject.Inject
 
 @HiltViewModel
-class DiscoverEventsViewModel @Inject constructor(
+class DiscoverViewModel @Inject constructor(
     private val ticketmasterRepository: TicketmasterRepository,
 ) : ViewModel() {
 
-    private val _discoverEvents = MutableLiveData<ViewModelState<List<EventModel>>>()
+    private val discoverState = MutableLiveData<ViewModelState<List<EventModel>>>()
 
-    fun getDiscoverEvents(): LiveData<ViewModelState<List<EventModel>>> = _discoverEvents
+    fun getDiscoverState(): LiveData<ViewModelState<List<EventModel>>> = discoverState
 
     init {
         loadDiscoverEvents()
@@ -31,16 +32,16 @@ class DiscoverEventsViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 withContext(Dispatchers.Main) {
-                    _discoverEvents.value = ViewModelStatePending()
+                    discoverState.value = ViewModelStatePending()
                 }
-                val events = ticketmasterRepository.getDiscoverEvents()
+                val events = ticketmasterRepository.getDiscoveryEvents()
                 withContext(Dispatchers.Main) {
-                    _discoverEvents.value = ViewModelStateIdle(events)
+                    discoverState.value = ViewModelStateIdle(events)
                 }
             } catch (e: HttpException) {
                 println(e.message)
                 withContext(Dispatchers.Main) {
-                    _discoverEvents.value = ViewModelStateError(e.message)
+                    discoverState.value = ViewModelStateError(e.message)
                 }
             }
         }

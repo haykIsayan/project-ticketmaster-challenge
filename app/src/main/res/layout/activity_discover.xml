@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".ui.discover.DiscoverActivity">
 
     <TextView
         android:id="@+id/noEventsTextView"
@@ -35,5 +35,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:visibility="gone"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/searchEventsButton"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:textColor="@color/white"
+        android:text="Search events"
+        app:backgroundTint="@color/purple_700"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,33 +1,35 @@
-package com.example.project_ticketmaster_challenge
+package com.example.project_ticketmaster_challenge.ui.discover
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.project_ticketmaster_challenge.R
 import com.example.project_ticketmaster_challenge.model.EventModel
-import com.example.project_ticketmaster_challenge.ui.DiscoverEventsAdapter
-import com.example.project_ticketmaster_challenge.ui.DiscoverEventsViewModel
 import com.example.project_ticketmaster_challenge.ui.ViewModelState
 import com.example.project_ticketmaster_challenge.ui.ViewModelState.*
+import com.example.project_ticketmaster_challenge.ui.search.SearchActivity
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_discover.*
 
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+class DiscoverActivity : ComponentActivity() {
 
-    private val discoverEventsViewModel by viewModels<DiscoverEventsViewModel>()
-    private val discoverEventsAdapter = DiscoverEventsAdapter()
+    private val discoverViewModel by viewModels<DiscoverViewModel>()
+    private val discoverAdapter = DiscoverAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_discover)
         initDiscoverEventsRecyclerView()
         initDiscoverEventsState()
+        initSearchEventsButton()
     }
 
     private fun initDiscoverEventsRecyclerView() {
-        discoverEventsRecyclerView.adapter = discoverEventsAdapter
+        discoverEventsRecyclerView.adapter = discoverAdapter
         discoverEventsRecyclerView.layoutManager = LinearLayoutManager(
             this,
             LinearLayoutManager.VERTICAL,
@@ -36,7 +38,7 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun initDiscoverEventsState() {
-        discoverEventsViewModel.getDiscoverEvents().observe(
+        discoverViewModel.getDiscoverState().observe(
             this,
             ::onDiscoverEventsState,
         )
@@ -61,12 +63,26 @@ class MainActivity : ComponentActivity() {
         discoverEventsLoadingIndicator.visibility = View.GONE
         noEventsTextView.visibility = View.GONE
         discoverEventsRecyclerView.visibility = View.VISIBLE
-        discoverEventsAdapter.updateItems(discoverEvents)
+        discoverAdapter.updateItems(discoverEvents)
     }
 
     private fun onStatePending() {
         discoverEventsRecyclerView.visibility = View.GONE
         discoverEventsLoadingIndicator.visibility = View.VISIBLE
         noEventsTextView.visibility = View.GONE
+    }
+
+    private fun initSearchEventsButton() {
+        searchEventsButton.setOnClickListener {
+            onSearchEventPressed()
+        }
+    }
+
+    private fun onSearchEventPressed() {
+        val intent = Intent(
+            this,
+            SearchActivity::class.java,
+        )
+        startActivity(intent)
     }
 }
