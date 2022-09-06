@@ -60,7 +60,7 @@ class SearchActivity : ComponentActivity() {
     }
 
     private fun onStateError() {
-//        noEventsTextView.visibility = View.VISIBLE
+        noSearchResultsTextView.visibility = View.VISIBLE
         searchEventsRecyclerView.visibility = View.GONE
         searchLoadingIndicator.visibility = View.GONE
     }
@@ -68,7 +68,7 @@ class SearchActivity : ComponentActivity() {
     private fun onStateIdle(state: ViewModelStateIdle<List<EventModel>>) {
         val discoverEvents = state.value
         searchLoadingIndicator.visibility = View.GONE
-//        noEventsTextView.visibility = View.GONE
+        noSearchResultsTextView.visibility = View.GONE
         searchEventsRecyclerView.visibility = View.VISIBLE
         searchAdapter.updateItems(discoverEvents)
     }
@@ -76,6 +76,6 @@ class SearchActivity : ComponentActivity() {
     private fun onStatePending() {
         searchEventsRecyclerView.visibility = View.GONE
         searchLoadingIndicator.visibility = View.VISIBLE
-//        noEventsTextView.visibility = View.GONE
+        noSearchResultsTextView.visibility = View.GONE
     }
 }

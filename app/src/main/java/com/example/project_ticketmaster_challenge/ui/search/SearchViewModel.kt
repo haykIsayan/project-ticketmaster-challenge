@@ -9,10 +9,7 @@ import com.example.project_ticketmaster_challenge.model.EventModel
 import com.example.project_ticketmaster_challenge.ui.ViewModelState
 import com.example.project_ticketmaster_challenge.ui.ViewModelState.*
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,8 +20,15 @@ class SearchViewModel @Inject constructor(
     private val searchState = MutableLiveData<ViewModelState<List<EventModel>>>()
     fun getSearchState(): LiveData<ViewModelState<List<EventModel>>> = searchState
 
+    private var searchJob: Job? = Job()
+
+    init {
+        searchEvents("")
+    }
+
     fun searchEvents(query: String) {
-        viewModelScope.launch(Dispatchers.IO) {
+        searchJob?.cancel()
+        searchJob = viewModelScope.launch(Dispatchers.IO) {
             try {
                 withContext(Dispatchers.Main) { searchState.value = ViewModelStatePending() }
                 delay(500)
@@ -36,5 +40,4 @@ class SearchViewModel @Inject constructor(
             }
         }
     }
-
 }

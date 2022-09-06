@@ -1,5 +1,6 @@
 package com.example.project_ticketmaster_challenge.ui.search
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -10,10 +11,11 @@ class SearchAdapter : RecyclerView.Adapter<SearchItemViewHolder>() {
 
     private val searchEvents = mutableListOf<EventModel>()
 
+    @SuppressLint("NotifyDataSetChanged")
     fun updateItems(events: List<EventModel>) {
         searchEvents.clear()
         searchEvents.addAll(events)
-        notifyItemRangeChanged(0, searchEvents.size - 1)
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchItemViewHolder {
