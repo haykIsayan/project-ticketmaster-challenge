@@ -1,4 +1,4 @@
-package com.example.project_ticketmaster_challenge.ui.search
+package com.example.project_ticketmaster_challenge.ui.search.filter
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

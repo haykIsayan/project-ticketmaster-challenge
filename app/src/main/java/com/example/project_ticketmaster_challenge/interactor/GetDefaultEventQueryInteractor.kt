@@ -6,7 +6,6 @@ import kotlinx.coroutines.delay
 
 class GetDefaultEventQueryInteractor {
     suspend fun execute(): EventQueryModel {
-        delay(500)
         return EventQueryModel(filters = FiltersUtils.defaultFilters)
     }
 }
