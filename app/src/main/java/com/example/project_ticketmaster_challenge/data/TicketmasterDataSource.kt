@@ -1,10 +1,10 @@
 package com.example.project_ticketmaster_challenge.data
 
-import com.example.project_ticketmaster_challenge.common.FiltersCompanion
+import com.example.project_ticketmaster_challenge.common.FiltersUtils
 import com.example.project_ticketmaster_challenge.data.network.TicketmasterApi
-import com.example.project_ticketmaster_challenge.model.EventModel
-import com.example.project_ticketmaster_challenge.model.EventQueryModel
-import com.example.project_ticketmaster_challenge.model.FilterModel
+import com.example.project_ticketmaster_challenge.model.event.EventModel
+import com.example.project_ticketmaster_challenge.model.event.EventQueryModel
+import com.example.project_ticketmaster_challenge.model.filter.FilterModel
 
 class TicketmasterDataSource(private val api: TicketmasterApi): TicketmasterRepository {
 
@@ -19,6 +19,6 @@ class TicketmasterDataSource(private val api: TicketmasterApi): TicketmasterRepo
     }
 
     override fun getEventFilters(): List<FilterModel> {
-        return FiltersCompanion.defaultFilters
+        return FiltersUtils.defaultFilters
     }
 }

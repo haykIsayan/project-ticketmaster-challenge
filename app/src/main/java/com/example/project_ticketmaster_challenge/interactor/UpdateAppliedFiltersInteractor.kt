@@ -1,6 +1,6 @@
 package com.example.project_ticketmaster_challenge.interactor
 
-import com.example.project_ticketmaster_challenge.model.FilterModel
+import com.example.project_ticketmaster_challenge.model.filter.FilterModel
 
 class UpdateAppliedFiltersInteractor {
     fun execute(filters: List<FilterModel>, filter: FilterModel): List<FilterModel> {

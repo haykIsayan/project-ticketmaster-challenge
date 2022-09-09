@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project_ticketmaster_challenge.R
-import com.example.project_ticketmaster_challenge.model.EventModel
+import com.example.project_ticketmaster_challenge.model.event.EventModel
 
 class SearchAdapter : RecyclerView.Adapter<SearchItemViewHolder>() {
 

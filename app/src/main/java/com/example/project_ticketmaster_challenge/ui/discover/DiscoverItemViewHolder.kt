@@ -3,13 +3,14 @@ package com.example.project_ticketmaster_challenge.ui.discover
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.project_ticketmaster_challenge.model.EventModel
+import com.example.project_ticketmaster_challenge.model.event.EventModel
 import kotlinx.android.synthetic.main.discover_event_item_view.view.*
 
 class DiscoverItemViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     fun bindEvent(event: EventModel) {
         itemView.discoverEventNameTextView.text = event.name
         initEventClassification(event)
+        initEventDate(event)
         initEventImage(event)
     }
 
@@ -23,8 +24,18 @@ class DiscoverItemViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) 
         }
     }
 
+    private fun initEventDate(event: EventModel)  {
+        val dates = event.dates ?: return
+        val startDate = dates.start?.localDate
+        if (startDate.isNullOrEmpty()) return
+        itemView.apply {
+            discoverEventDateTextView.visibility = View.VISIBLE
+            discoverEventDateTextView.text = startDate
+        }
+    }
+
     private fun initEventImage(event: EventModel) {
-        val images = event.images
+        val images = event.images ?: return
         if (images.isNotEmpty()) {
             Glide.with(itemView)
                 .load(event.images.first().url)

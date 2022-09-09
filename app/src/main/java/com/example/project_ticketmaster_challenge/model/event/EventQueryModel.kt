@@ -1,4 +1,4 @@
-package com.example.project_ticketmaster_challenge.model
+package com.example.project_ticketmaster_challenge.model.event
 
 data class EventQueryModel(
     val keyword: String? = null,

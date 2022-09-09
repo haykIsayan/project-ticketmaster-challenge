@@ -1,4 +1,4 @@
-package com.example.project_ticketmaster_challenge.ui.search
+package com.example.project_ticketmaster_challenge.ui.search.filter
 
 import android.graphics.Rect
 import android.view.View

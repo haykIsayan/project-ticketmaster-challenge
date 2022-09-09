@@ -3,13 +3,15 @@ package com.example.project_ticketmaster_challenge.ui.search
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.project_ticketmaster_challenge.model.EventModel
+import com.example.project_ticketmaster_challenge.model.event.EventModel
 import kotlinx.android.synthetic.main.search_event_item_view.view.*
 
 class SearchItemViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+
     fun bindEvent(event: EventModel) {
         itemView.searchEventName.text = event.name
         initEventClassification(event)
+        initEventStartDate(event)
         initEventImage(event)
     }
 
@@ -23,8 +25,18 @@ class SearchItemViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         }
     }
 
+    private fun initEventStartDate(event: EventModel) {
+        val dates = event.dates ?: return
+        val startDate = dates.start?.localDate
+        if (startDate.isNullOrEmpty()) return
+        itemView.apply {
+            searchEventDateTextView.visibility = View.VISIBLE
+            searchEventDateTextView.text = startDate
+        }
+    }
+
     private fun initEventImage(event: EventModel) {
-        val images = event.images
+        val images = event.images ?: return
         if (images.isNotEmpty()) {
             Glide.with(itemView)
                 .load(event.images.first().url)

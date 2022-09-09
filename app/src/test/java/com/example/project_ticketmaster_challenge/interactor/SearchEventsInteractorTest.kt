@@ -1,8 +1,8 @@
 package com.example.project_ticketmaster_challenge.interactor
 
 import com.example.project_ticketmaster_challenge.data.TicketmasterRepository
-import com.example.project_ticketmaster_challenge.model.EventModel
-import com.example.project_ticketmaster_challenge.model.EventQueryModel
+import com.example.project_ticketmaster_challenge.model.event.EventModel
+import com.example.project_ticketmaster_challenge.model.event.EventQueryModel
 import io.mockk.*
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert
@@ -20,7 +20,8 @@ class SearchEventsInteractorTest {
                 "eventName",
                 "eventType",
                 emptyList(),
-                emptyList()
+                emptyList(),
+                null
             )
         )
         coEvery { mockTicketmasterRepository.getDiscoveryEvents(mockEventQuery) }.returns(mockEvents)

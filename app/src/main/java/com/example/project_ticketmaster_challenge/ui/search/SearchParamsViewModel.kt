@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 import com.example.project_ticketmaster_challenge.interactor.AddFilterToEventQueryInteractor
 import com.example.project_ticketmaster_challenge.interactor.GetEventFiltersInteractor
 import com.example.project_ticketmaster_challenge.interactor.UpdateAppliedFiltersInteractor
-import com.example.project_ticketmaster_challenge.model.EventQueryModel
-import com.example.project_ticketmaster_challenge.model.FilterModel
+import com.example.project_ticketmaster_challenge.model.event.EventQueryModel
+import com.example.project_ticketmaster_challenge.model.filter.FilterModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

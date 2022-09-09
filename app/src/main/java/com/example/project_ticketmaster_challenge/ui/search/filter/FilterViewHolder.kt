@@ -4,8 +4,8 @@ import android.content.res.ColorStateList
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project_ticketmaster_challenge.R
-import com.example.project_ticketmaster_challenge.model.FilterModel
-import com.example.project_ticketmaster_challenge.model.FilterType
+import com.example.project_ticketmaster_challenge.model.filter.FilterModel
+import com.example.project_ticketmaster_challenge.model.filter.FilterType
 import kotlinx.android.synthetic.main.filter_item_view.view.*
 
 class FilterViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {

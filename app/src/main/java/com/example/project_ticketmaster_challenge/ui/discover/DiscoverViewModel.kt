@@ -4,11 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.project_ticketmaster_challenge.model.EventModel
+import com.example.project_ticketmaster_challenge.model.event.EventModel
 import com.example.project_ticketmaster_challenge.common.ViewModelState
 import com.example.project_ticketmaster_challenge.common.ViewModelState.*
 import com.example.project_ticketmaster_challenge.interactor.SearchEventsInteractor
-import com.example.project_ticketmaster_challenge.model.EventQueryModel
+import com.example.project_ticketmaster_challenge.model.event.EventQueryModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Ticketmaster Challenge</string>
     <string name="search_events">Search events</string>
+    <string name="no_events_to_display">No events to display</string>
 </resources>

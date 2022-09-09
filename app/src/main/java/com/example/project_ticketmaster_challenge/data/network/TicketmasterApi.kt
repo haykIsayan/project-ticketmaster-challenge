@@ -1,6 +1,6 @@
 package com.example.project_ticketmaster_challenge.data.network
 
-import com.example.project_ticketmaster_challenge.model.EventResponseModel
+import com.example.project_ticketmaster_challenge.model.event.EventResponseModel
 import retrofit2.http.GET
 import retrofit2.http.Query
 

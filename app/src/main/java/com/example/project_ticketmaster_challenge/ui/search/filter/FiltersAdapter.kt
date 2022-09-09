@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project_ticketmaster_challenge.R
-import com.example.project_ticketmaster_challenge.model.FilterModel
+import com.example.project_ticketmaster_challenge.model.filter.FilterModel
 
 class FiltersAdapter: RecyclerView.Adapter<FilterViewHolder>() {
 

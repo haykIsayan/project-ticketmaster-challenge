@@ -1,9 +1,9 @@
 package com.example.project_ticketmaster_challenge.common
 
-import com.example.project_ticketmaster_challenge.model.FilterModel
-import com.example.project_ticketmaster_challenge.model.FilterType
+import com.example.project_ticketmaster_challenge.model.filter.FilterModel
+import com.example.project_ticketmaster_challenge.model.filter.FilterType
 
-object FiltersCompanion {
+object FiltersUtils {
     val defaultFilters = listOf(
         FilterModel(
             type = FilterType.classificationSegment,

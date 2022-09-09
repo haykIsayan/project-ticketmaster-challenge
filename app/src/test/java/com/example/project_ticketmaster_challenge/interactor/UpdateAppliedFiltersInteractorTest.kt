@@ -1,6 +1,6 @@
 package com.example.project_ticketmaster_challenge.interactor
 
-import com.example.project_ticketmaster_challenge.common.FiltersCompanion
+import com.example.project_ticketmaster_challenge.common.FiltersUtils
 import org.junit.Assert
 import org.junit.Test
 
@@ -8,7 +8,7 @@ class UpdateAppliedFiltersInteractorTest {
 
     @Test
     fun updatesOnlyOneFilterPerFilterType() {
-        val filters = FiltersCompanion.defaultFilters
+        val filters = FiltersUtils.defaultFilters
         val filter = filters.first().let {
             it.copy(isApplied = !it.isApplied)
         }

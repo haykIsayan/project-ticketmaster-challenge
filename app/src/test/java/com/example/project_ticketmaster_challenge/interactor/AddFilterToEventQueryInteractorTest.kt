@@ -1,9 +1,9 @@
 package com.example.project_ticketmaster_challenge.interactor
 
 import com.example.project_ticketmaster_challenge.common.EventClassificationIds
-import com.example.project_ticketmaster_challenge.model.EventQueryModel
-import com.example.project_ticketmaster_challenge.model.FilterModel
-import com.example.project_ticketmaster_challenge.model.FilterType
+import com.example.project_ticketmaster_challenge.model.event.EventQueryModel
+import com.example.project_ticketmaster_challenge.model.filter.FilterModel
+import com.example.project_ticketmaster_challenge.model.filter.FilterType
 import org.junit.Assert
 import org.junit.Test
 

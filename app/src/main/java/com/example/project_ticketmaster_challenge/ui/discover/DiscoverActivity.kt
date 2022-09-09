@@ -7,7 +7,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_ticketmaster_challenge.R
-import com.example.project_ticketmaster_challenge.model.EventModel
+import com.example.project_ticketmaster_challenge.model.event.EventModel
 import com.example.project_ticketmaster_challenge.common.ViewModelState
 import com.example.project_ticketmaster_challenge.common.ViewModelState.*
 import com.example.project_ticketmaster_challenge.ui.search.SearchActivity
