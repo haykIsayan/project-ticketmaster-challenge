@@ -4,20 +4,20 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.project_ticketmaster_challenge.data.TicketmasterRepository
 import com.example.project_ticketmaster_challenge.model.EventModel
-import com.example.project_ticketmaster_challenge.ui.ViewModelState
-import com.example.project_ticketmaster_challenge.ui.ViewModelState.*
+import com.example.project_ticketmaster_challenge.common.ViewModelState
+import com.example.project_ticketmaster_challenge.common.ViewModelState.*
+import com.example.project_ticketmaster_challenge.interactor.SearchEventsInteractor
+import com.example.project_ticketmaster_challenge.model.EventQueryModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import retrofit2.HttpException
 import javax.inject.Inject
 
 @HiltViewModel
 class DiscoverViewModel @Inject constructor(
-    private val ticketmasterRepository: TicketmasterRepository,
+    private val getLocalSportsInteractor: SearchEventsInteractor
 ) : ViewModel() {
 
     private val discoverState = MutableLiveData<ViewModelState<List<EventModel>>>()
@@ -28,17 +28,17 @@ class DiscoverViewModel @Inject constructor(
         loadDiscoverEvents()
     }
 
-    private fun loadDiscoverEvents() {
+    private fun loadDiscoverEvents() { // todo rewrite with unit test
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 withContext(Dispatchers.Main) {
                     discoverState.value = ViewModelStatePending()
                 }
-                val events = ticketmasterRepository.getDiscoveryEvents()
+                val events = getLocalSportsInteractor.execute(EventQueryModel())
                 withContext(Dispatchers.Main) {
                     discoverState.value = ViewModelStateIdle(events)
                 }
-            } catch (e: HttpException) {
+            } catch (e: Exception) {
                 println(e.message)
                 withContext(Dispatchers.Main) {
                     discoverState.value = ViewModelStateError(e.message)

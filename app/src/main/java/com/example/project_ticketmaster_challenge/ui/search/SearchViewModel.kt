@@ -6,8 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.project_ticketmaster_challenge.data.TicketmasterRepository
 import com.example.project_ticketmaster_challenge.model.EventModel
-import com.example.project_ticketmaster_challenge.ui.ViewModelState
-import com.example.project_ticketmaster_challenge.ui.ViewModelState.*
+import com.example.project_ticketmaster_challenge.model.EventQueryModel
+import com.example.project_ticketmaster_challenge.common.ViewModelState
+import com.example.project_ticketmaster_challenge.common.ViewModelState.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import javax.inject.Inject
@@ -22,17 +23,13 @@ class SearchViewModel @Inject constructor(
 
     private var searchJob: Job? = Job()
 
-    init {
-        searchEvents("")
-    }
-
-    fun searchEvents(query: String) {
+    fun searchEvents(eventQuery: EventQueryModel) { // todo write a unit test
         searchJob?.cancel()
         searchJob = viewModelScope.launch(Dispatchers.IO) {
             try {
                 withContext(Dispatchers.Main) { searchState.value = ViewModelStatePending() }
                 delay(500)
-                val events = ticketmasterRepository.searchDiscoveryEvents(query)
+                val events = ticketmasterRepository.getDiscoveryEvents(eventQuery)
                 withContext(Dispatchers.Main) { searchState.value = ViewModelStateIdle(events) }
             } catch (e: Exception) {
                 println(e.message)

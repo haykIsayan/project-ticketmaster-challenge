@@ -15,7 +15,7 @@ class SearchItemViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
     private fun initEventClassification(event: EventModel) {
         val classifications = event.classifications
-        if (classifications.isEmpty()) return
+        if (classifications.isNullOrEmpty()) return
         val segment = classifications.first().segment ?: return
         itemView.apply {
             searchEventClassificationTextView.visibility = View.VISIBLE

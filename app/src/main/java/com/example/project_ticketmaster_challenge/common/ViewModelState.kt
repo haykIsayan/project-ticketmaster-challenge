@@ -1,4 +1,4 @@
-package com.example.project_ticketmaster_challenge.ui
+package com.example.project_ticketmaster_challenge.common
 
 sealed class ViewModelState<DataType> {
 

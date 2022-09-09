@@ -8,7 +8,7 @@ data class EventModel(
     val name: String,
     val type: String,
     val images: List<ImageModel>,
-    val classifications: List<ClassificationModel>
+    val classifications: List<ClassificationModel>? = null
 ): Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString() ?: "",
