@@ -29,7 +29,7 @@ class FilterViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     }
 
     private fun getNotAppliedColor(filter: FilterModel) = when (filter.type) {
-        FilterType.classificationSegment -> itemView.resources.getColor(R.color.purple_700)
+        FilterType.classification -> itemView.resources.getColor(R.color.purple_700)
         FilterType.sort -> itemView.resources.getColor(R.color.purple_200)
         else -> itemView.resources.getColor(R.color.gray_600)
     }

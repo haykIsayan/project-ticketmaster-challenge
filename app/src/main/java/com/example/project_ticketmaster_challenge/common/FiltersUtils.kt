@@ -6,38 +6,40 @@ import com.example.project_ticketmaster_challenge.model.filter.FilterType
 object FiltersUtils {
     val defaultFilters = listOf(
         FilterModel(
-            type = FilterType.classificationSegment,
-            value = EventClassificationIds.sportsClassificationId,
-            name = "Sports"
+            type = FilterType.classification,
+            value = EventClassificationValues.sportsClassificationValue,
+            name = "Sports",
+            isApplied = true
         ),
         FilterModel(
-            type = FilterType.classificationSegment,
-            value = EventClassificationIds.musicClassificationId,
+            type = FilterType.classification,
+            value = EventClassificationValues.musicClassificationValue,
             name = "Music"
         ),
         FilterModel(
-            type = FilterType.classificationSegment,
-            value = EventClassificationIds.artsAndTheatreClassificationId,
+            type = FilterType.classification,
+            value = EventClassificationValues.artsAndTheatreClassificationValue,
             name = "Arts and Theatre"
         ),
         FilterModel(
-            type = FilterType.classificationSegment,
-            value = "KZFzniwnSyZfZ7v7nn",
+            type = FilterType.classification,
+            value = EventClassificationValues.filmClassificationValue,
             name = "Film"
         ),
         FilterModel(
             type = FilterType.sort,
-            value = "name,asc",
-            name = "Alphabetical"
+            value = EventSortValues.alphabeticalSortValue,
+            name = "Alphabetical",
+            isApplied = true
         ),
         FilterModel(
             type = FilterType.sort,
-            value = "date,asc",
+            value = EventSortValues.latestSortValue,
             name = "Latest"
         ),
         FilterModel(
             type = FilterType.sort,
-            value = "relevance,desc",
+            value = EventSortValues.mostRelevantValue,
             name = "Most Relevant"
         )
     )

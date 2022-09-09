@@ -1,8 +1,8 @@
 package com.example.project_ticketmaster_challenge.model.event
 
+import com.example.project_ticketmaster_challenge.model.filter.FilterModel
+
 data class EventQueryModel(
-    val keyword: String? = null,
-    val classificationId: String? = null,
-    val sort: String? = null,
-    val countryCode: String? = null
+    val keyword: String? = "",
+    val filters: List<FilterModel> = emptyList()
 )

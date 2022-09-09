@@ -3,10 +3,7 @@ package com.example.project_ticketmaster_challenge.di
 import android.content.Context
 import android.os.Build
 import com.example.project_ticketmaster_challenge.data.TicketmasterRepository
-import com.example.project_ticketmaster_challenge.interactor.AddFilterToEventQueryInteractor
-import com.example.project_ticketmaster_challenge.interactor.GetEventFiltersInteractor
-import com.example.project_ticketmaster_challenge.interactor.SearchEventsInteractor
-import com.example.project_ticketmaster_challenge.interactor.UpdateAppliedFiltersInteractor
+import com.example.project_ticketmaster_challenge.interactor.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,30 +20,23 @@ object InteractorModule {
     @Singleton
     fun provideLocale(@ApplicationContext context: Context): Locale {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
-            context.resources.configuration.locales.get(0);
+            context.resources.configuration.locales.get(0)
         } else{
-            context.resources.configuration.locale;
+            context.resources.configuration.locale
         }
     }
 
     @Provides
     @Singleton
-    fun providesAddFilterToEventQueryInteractor(): AddFilterToEventQueryInteractor {
-        return AddFilterToEventQueryInteractor()
+    fun providesAddFilterToEventQueryInteractor(): ApplyFilterToEventQueryInteractor {
+        return ApplyFilterToEventQueryInteractor()
     }
 
     @Provides
     @Singleton
-    fun providesUpdateAppliedFiltersInteractor(): UpdateAppliedFiltersInteractor {
-        return UpdateAppliedFiltersInteractor()
-    }
-
-    @Provides
-    @Singleton
-    fun providesGetEventFiltersInteractor(
-        ticketmasterRepository: TicketmasterRepository
-    ): GetEventFiltersInteractor {
-        return GetEventFiltersInteractor(ticketmasterRepository)
+    fun providesGetDefaultEventQueryInteractor(
+    ): GetDefaultEventQueryInteractor {
+        return GetDefaultEventQueryInteractor()
     }
 
     @Provides

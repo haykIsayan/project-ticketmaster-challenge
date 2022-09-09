@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.activity_search.*
 @AndroidEntryPoint
 class SearchActivity : ComponentActivity() {
 
-    private val searchParamsViewModel by viewModels<SearchParamsViewModel>()
+    private val filterViewModel by viewModels<FilterViewModel>()
     private val searchViewModel by viewModels<SearchViewModel>()
 
     private val searchAdapter = SearchAdapter()
@@ -28,7 +28,7 @@ class SearchActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
-        searchEvents()
+        observeEventQuery()
         initSearchEditText()
         initSearchRecyclerView()
         initSegmentsRecyclerView()
@@ -39,15 +39,13 @@ class SearchActivity : ComponentActivity() {
     private fun initSearchEditText() {
         searchEventsEditText.addTextChangedListener {
             val text = searchEventsEditText.text.toString()
-            searchParamsViewModel.onKeywordChanged(text)
-            searchEvents()
+            filterViewModel.onKeywordChanged(text)
         }
     }
 
     private fun initSegmentsRecyclerView() {
         filterAdapter.onSegmentSelected { segment ->
-            searchParamsViewModel.onFilterSelected(segment)
-            searchEvents()
+            filterViewModel.onFilterSelected(segment)
         }
         segmentRecyclerView.adapter = filterAdapter
         segmentRecyclerView.addItemDecoration(FilterDecorator())
@@ -58,14 +56,17 @@ class SearchActivity : ComponentActivity() {
         )
     }
 
-    private fun searchEvents() {
-        val eventQuery = searchParamsViewModel.eventQuery.value ?: return
-        searchViewModel.searchEvents(eventQuery)
+
+    private fun observeEventQuery() {
+        filterViewModel.getEventQuery().observe(this) {
+            searchViewModel.searchEvents(it)
+        }
     }
 
+
     private fun initSegmentsState() {
-        searchParamsViewModel.getFilters().observe(this) {
-            filterAdapter.updateItems(it)
+        filterViewModel.getEventQuery().observe(this) {
+            filterAdapter.updateItems(it.filters)
         }
     }
 

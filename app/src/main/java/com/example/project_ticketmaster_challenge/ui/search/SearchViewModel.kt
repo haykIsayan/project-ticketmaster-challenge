@@ -4,18 +4,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.project_ticketmaster_challenge.data.TicketmasterRepository
 import com.example.project_ticketmaster_challenge.model.event.EventModel
 import com.example.project_ticketmaster_challenge.model.event.EventQueryModel
 import com.example.project_ticketmaster_challenge.common.ViewModelState
 import com.example.project_ticketmaster_challenge.common.ViewModelState.*
+import com.example.project_ticketmaster_challenge.interactor.SearchEventsInteractor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    private val ticketmasterRepository: TicketmasterRepository
+    private val searchEventsInteractor: SearchEventsInteractor
 ): ViewModel() {
 
     private val searchState = MutableLiveData<ViewModelState<List<EventModel>>>()
@@ -29,7 +29,7 @@ class SearchViewModel @Inject constructor(
             try {
                 withContext(Dispatchers.Main) { searchState.value = ViewModelStatePending() }
                 delay(500)
-                val events = ticketmasterRepository.getDiscoveryEvents(eventQuery)
+                val events = searchEventsInteractor.execute(eventQuery)
                 withContext(Dispatchers.Main) { searchState.value = ViewModelStateIdle(events) }
             } catch (e: Exception) {
                 println(e.message)
