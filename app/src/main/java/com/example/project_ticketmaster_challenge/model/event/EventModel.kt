@@ -2,8 +2,8 @@ package com.example.project_ticketmaster_challenge.model.event
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.example.project_ticketmaster_challenge.model.classification.ClassificationModel
-import com.example.project_ticketmaster_challenge.model.date.DatesModel
+import com.example.project_ticketmaster_challenge.model.event.classification.ClassificationModel
+import com.example.project_ticketmaster_challenge.model.event.date.DatesModel
 
 data class EventModel(
     val id: String,

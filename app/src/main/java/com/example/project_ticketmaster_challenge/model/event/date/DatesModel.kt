@@ -1,4 +1,4 @@
-package com.example.project_ticketmaster_challenge.model.date
+package com.example.project_ticketmaster_challenge.model.event.date
 
 import android.os.Parcel
 import android.os.Parcelable

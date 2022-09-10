@@ -3,17 +3,12 @@ package com.example.project_ticketmaster_challenge.ui.filter
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.project_ticketmaster_challenge.interactor.ApplyFilterToFilterQueryInteractor
 import com.example.project_ticketmaster_challenge.interactor.GetDefaultFilterQueryInteractor
 import com.example.project_ticketmaster_challenge.model.filter.FilterQueryModel
 import com.example.project_ticketmaster_challenge.model.filter.FilterModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
-
 
 @HiltViewModel
 class FilterViewModel @Inject constructor(
@@ -29,14 +24,8 @@ class FilterViewModel @Inject constructor(
     }
 
     private fun loadFilterQuery() {
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                val query = getDefaultFilterQueryInteractor.execute()
-                withContext(Dispatchers.Main) { filterQuery.value = query }
-            } catch (e: Exception) {
-
-            }
-        }
+        val query = getDefaultFilterQueryInteractor.execute()
+        filterQuery.value = query
     }
 
     fun onKeywordChanged(keyword: String) {

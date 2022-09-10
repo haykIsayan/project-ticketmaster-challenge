@@ -1,40 +1,37 @@
 package com.example.project_ticketmaster_challenge.ui.search
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import com.example.project_ticketmaster_challenge.common.view_model.LoadStateViewModel
 import com.example.project_ticketmaster_challenge.model.event.EventModel
 import com.example.project_ticketmaster_challenge.model.filter.FilterQueryModel
-import com.example.project_ticketmaster_challenge.common.ViewModelState
-import com.example.project_ticketmaster_challenge.common.ViewModelState.*
+import com.example.project_ticketmaster_challenge.common.view_model.ViewModelState
 import com.example.project_ticketmaster_challenge.interactor.SearchEventsInteractor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import javax.inject.Inject
+import javax.inject.Named
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
+    @Named("ioDispatcher")
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
+    @Named("mainDispatcher")
+    private val mainDispatcher: CoroutineDispatcher = Dispatchers.Main,
     private val searchEventsInteractor: SearchEventsInteractor
-): ViewModel() {
+): LoadStateViewModel<List<EventModel>>(mainDispatcher, ioDispatcher) {
 
-    private val searchState = MutableLiveData<ViewModelState<List<EventModel>>>()
-    fun getSearchState(): LiveData<ViewModelState<List<EventModel>>> = searchState
+    fun getSearchState(): LiveData<ViewModelState<List<EventModel>>> = getState()
 
     private var searchJob: Job? = Job()
 
-    fun searchEvents(filterQuery: FilterQueryModel) { // todo write a unit test
+    fun searchEvents(filterQuery: FilterQueryModel, debounce: Boolean = true) {
         searchJob?.cancel()
-        searchJob = viewModelScope.launch(Dispatchers.IO) {
-            try {
-                withContext(Dispatchers.Main) { searchState.value = ViewModelStatePending() }
-                delay(500)
-                val events = searchEventsInteractor.execute(filterQuery)
-                withContext(Dispatchers.Main) { searchState.value = ViewModelStateIdle(events) }
-            } catch (e: Exception) {
-                println(e.message)
-                withContext(Dispatchers.Main) { searchState.value = ViewModelStateError(e.message) }
-            }
+        searchJob = loadState(
+            delayTime = if (debounce) 500 else 0
+        ) {
+            searchEventsInteractor.execute(filterQuery)
         }
     }
+
+    override fun isDataEmpty(data: List<EventModel>) = data.isEmpty()
 }
