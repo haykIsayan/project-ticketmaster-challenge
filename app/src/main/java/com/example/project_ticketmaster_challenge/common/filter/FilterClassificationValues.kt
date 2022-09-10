@@ -1,6 +1,6 @@
-package com.example.project_ticketmaster_challenge.common
+package com.example.project_ticketmaster_challenge.common.filter
 
-object EventClassificationValues {
+object FilterClassificationValues {
     const val sportsClassificationValue = "KZFzniwnSyZfZ7v7nE"
     const val musicClassificationValue = "KZFzniwnSyZfZ7v7nJ"
     const val artsAndTheatreClassificationValue = "KZFzniwnSyZfZ7v7na"

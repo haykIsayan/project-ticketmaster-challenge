@@ -28,15 +28,15 @@ object InteractorModule {
 
     @Provides
     @Singleton
-    fun providesAddFilterToEventQueryInteractor(): ApplyFilterToEventQueryInteractor {
-        return ApplyFilterToEventQueryInteractor()
+    fun providesApplyFilterToFilterQueryInteractor(): ApplyFilterToFilterQueryInteractor {
+        return ApplyFilterToFilterQueryInteractor()
     }
 
     @Provides
     @Singleton
-    fun providesGetDefaultEventQueryInteractor(
-    ): GetDefaultEventQueryInteractor {
-        return GetDefaultEventQueryInteractor()
+    fun providesGetDefaultFilterQueryInteractor(
+    ): GetDefaultFilterQueryInteractor {
+        return GetDefaultFilterQueryInteractor()
     }
 
     @Provides

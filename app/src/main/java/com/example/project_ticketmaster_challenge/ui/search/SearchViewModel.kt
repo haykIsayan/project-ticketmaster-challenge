@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.project_ticketmaster_challenge.model.event.EventModel
-import com.example.project_ticketmaster_challenge.model.event.EventQueryModel
+import com.example.project_ticketmaster_challenge.model.filter.FilterQueryModel
 import com.example.project_ticketmaster_challenge.common.ViewModelState
 import com.example.project_ticketmaster_challenge.common.ViewModelState.*
 import com.example.project_ticketmaster_challenge.interactor.SearchEventsInteractor
@@ -23,13 +23,13 @@ class SearchViewModel @Inject constructor(
 
     private var searchJob: Job? = Job()
 
-    fun searchEvents(eventQuery: EventQueryModel) { // todo write a unit test
+    fun searchEvents(filterQuery: FilterQueryModel) { // todo write a unit test
         searchJob?.cancel()
         searchJob = viewModelScope.launch(Dispatchers.IO) {
             try {
                 withContext(Dispatchers.Main) { searchState.value = ViewModelStatePending() }
                 delay(500)
-                val events = searchEventsInteractor.execute(eventQuery)
+                val events = searchEventsInteractor.execute(filterQuery)
                 withContext(Dispatchers.Main) { searchState.value = ViewModelStateIdle(events) }
             } catch (e: Exception) {
                 println(e.message)

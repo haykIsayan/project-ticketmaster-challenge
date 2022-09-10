@@ -8,7 +8,7 @@ import com.example.project_ticketmaster_challenge.model.event.EventModel
 import com.example.project_ticketmaster_challenge.common.ViewModelState
 import com.example.project_ticketmaster_challenge.common.ViewModelState.*
 import com.example.project_ticketmaster_challenge.interactor.SearchEventsInteractor
-import com.example.project_ticketmaster_challenge.model.event.EventQueryModel
+import com.example.project_ticketmaster_challenge.model.filter.FilterQueryModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -34,7 +34,7 @@ class DiscoverViewModel @Inject constructor(
                 withContext(Dispatchers.Main) {
                     discoverState.value = ViewModelStatePending()
                 }
-                val events = getLocalSportsInteractor.execute(EventQueryModel())
+                val events = getLocalSportsInteractor.execute(FilterQueryModel())
                 withContext(Dispatchers.Main) {
                     discoverState.value = ViewModelStateIdle(events)
                 }

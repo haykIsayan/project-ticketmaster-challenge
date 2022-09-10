@@ -7,6 +7,7 @@ import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.project_ticketmaster_challenge.R
 import com.example.project_ticketmaster_challenge.common.ViewModelState
 import com.example.project_ticketmaster_challenge.common.ViewModelState.*
@@ -24,7 +25,9 @@ class SearchActivity : ComponentActivity() {
     private val searchViewModel by viewModels<SearchViewModel>()
 
     private val searchAdapter = SearchAdapter()
-    private val filterAdapter = FiltersAdapter()
+    private val classificationFilterAdapter = FiltersAdapter()
+    private val sortFilterAdapter = FiltersAdapter()
+    private val countryCodeFilterAdapter = FiltersAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +35,7 @@ class SearchActivity : ComponentActivity() {
         observeEventQuery()
         initSearchEditText()
         initSearchRecyclerView()
-        initSegmentsRecyclerView()
+        initFilters()
         initSegmentsState()
         initSearchState()
     }
@@ -44,13 +47,31 @@ class SearchActivity : ComponentActivity() {
         }
     }
 
-    private fun initSegmentsRecyclerView() {
-        filterAdapter.onSegmentSelected { segment ->
-            filterViewModel.onFilterSelected(segment)
+    private fun initFilters() {
+        initFiltersRecyclerView(
+            classificationFilterRecyclerView,
+            classificationFilterAdapter
+        )
+        initFiltersRecyclerView(
+            sortFilterRecyclerView,
+            sortFilterAdapter
+        )
+        initFiltersRecyclerView(
+            countryCodeRecyclerView,
+            countryCodeFilterAdapter
+        )
+    }
+
+    private fun initFiltersRecyclerView(
+        filterRecyclerView: RecyclerView,
+        filtersAdapter: FiltersAdapter
+    ) {
+        filtersAdapter.onFilterSelected { filter ->
+            filterViewModel.onFilterSelected(filter)
         }
-        segmentRecyclerView.adapter = filterAdapter
-        segmentRecyclerView.addItemDecoration(FilterDecorator())
-        segmentRecyclerView.layoutManager = LinearLayoutManager(
+        filterRecyclerView.adapter = filtersAdapter
+        filterRecyclerView.addItemDecoration(FilterDecorator())
+        filterRecyclerView.layoutManager = LinearLayoutManager(
             this,
             LinearLayoutManager.HORIZONTAL,
             false,
@@ -59,15 +80,17 @@ class SearchActivity : ComponentActivity() {
 
 
     private fun observeEventQuery() {
-        filterViewModel.getEventQuery().observe(this) {
+        filterViewModel.getFilterQuery().observe(this) {
             searchViewModel.searchEvents(it)
         }
     }
 
 
     private fun initSegmentsState() {
-        filterViewModel.getEventQuery().observe(this) {
-            filterAdapter.updateItems(it.filters)
+        filterViewModel.getFilterQuery().observe(this) {
+            classificationFilterAdapter.updateItems(it.classificationFilters)
+            sortFilterAdapter.updateItems(it.sortFilters)
+            countryCodeFilterAdapter.updateItems(it.countryCodeFilters)
         }
     }
 
