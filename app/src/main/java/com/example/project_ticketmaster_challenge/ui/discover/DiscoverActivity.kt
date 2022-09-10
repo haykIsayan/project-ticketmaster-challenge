@@ -38,6 +38,7 @@ class DiscoverActivity : ComponentActivity() {
     }
 
     private fun initDiscoverEventsState() {
+        discoverViewModel.loadDiscoverEvents()
         discoverViewModel.getDiscoverState().observe(
             this,
             ::onDiscoverEventsState,
