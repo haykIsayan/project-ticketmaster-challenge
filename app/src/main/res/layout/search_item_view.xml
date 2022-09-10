@@ -4,17 +4,12 @@
     android:layout_height="100dp"
     android:orientation="horizontal"
     android:background="@color/black"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/searchEventImage"
         android:layout_width="100dp"
-        android:layout_height="100dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/searchEventName"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        android:layout_height="100dp"/>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -23,18 +18,14 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/searchEventName"
+            android:id="@+id/searchEventNameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:textColor="@color/white"
             android:maxLines="1"
             android:textSize="16sp"
-            tools:text="Phoenix Suns vs. Golden State Warriors"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/searchEventImage"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/searchEventClassificationTextView"/>
+            tools:text="Phoenix Suns vs. Golden State Warriors"/>
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="wrap_content"
@@ -51,10 +42,7 @@
                 android:background="@drawable/filter_background"
                 android:visibility="gone"
                 tools:visibility="visible"
-                tools:text="Sports"
-                app:layout_constraintTop_toBottomOf="@+id/searchEventName"
-                app:layout_constraintStart_toEndOf="@+id/searchEventImage"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                tools:text="Sports"/>
 
             <TextView
                 android:id="@+id/searchEventDateTextView"
@@ -66,10 +54,7 @@
                 android:backgroundTint="@color/cerise"
                 android:visibility="gone"
                 tools:visibility="visible"
-                tools:text="2022-11-16"
-                app:layout_constraintTop_toBottomOf="@+id/searchEventName"
-                app:layout_constraintStart_toEndOf="@+id/searchEventClassificationTextView"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                tools:text="Jan 25, 2022"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
