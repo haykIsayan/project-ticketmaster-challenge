@@ -20,7 +20,7 @@ class FiltersAdapter: RecyclerView.Adapter<FilterViewHolder>() {
         notifyDataSetChanged()
     }
 
-    fun onSegmentSelected(onFilterSelected: (FilterModel) -> Unit) {
+    fun onFilterSelected(onFilterSelected: (FilterModel) -> Unit) {
         this.onFilterSelected = onFilterSelected
     }
 
@@ -37,8 +37,8 @@ class FiltersAdapter: RecyclerView.Adapter<FilterViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: FilterViewHolder, position: Int) {
-        val segment = items[position]
-        holder.bind(segment, onFilterSelected)
+        val filter = items[position]
+        holder.bind(filter, onFilterSelected)
     }
 
     override fun getItemCount(): Int = items.size

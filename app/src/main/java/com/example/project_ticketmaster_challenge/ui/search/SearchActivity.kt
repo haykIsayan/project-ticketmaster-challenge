@@ -7,11 +7,13 @@ import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.project_ticketmaster_challenge.R
 import com.example.project_ticketmaster_challenge.common.ViewModelState
 import com.example.project_ticketmaster_challenge.common.ViewModelState.*
 import com.example.project_ticketmaster_challenge.model.event.EventModel
 import com.example.project_ticketmaster_challenge.ui.search.filter.FilterDecorator
+import com.example.project_ticketmaster_challenge.ui.search.filter.FilterViewModel
 import com.example.project_ticketmaster_challenge.ui.search.filter.FiltersAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_search.*
@@ -19,19 +21,21 @@ import kotlinx.android.synthetic.main.activity_search.*
 @AndroidEntryPoint
 class SearchActivity : ComponentActivity() {
 
-    private val searchParamsViewModel by viewModels<SearchParamsViewModel>()
+    private val filterViewModel by viewModels<FilterViewModel>()
     private val searchViewModel by viewModels<SearchViewModel>()
 
     private val searchAdapter = SearchAdapter()
-    private val filterAdapter = FiltersAdapter()
+    private val classificationFilterAdapter = FiltersAdapter()
+    private val sortFilterAdapter = FiltersAdapter()
+    private val countryCodeFilterAdapter = FiltersAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
-        searchEvents()
+        observeEventQuery()
         initSearchEditText()
         initSearchRecyclerView()
-        initSegmentsRecyclerView()
+        initFilters()
         initSegmentsState()
         initSearchState()
     }
@@ -39,33 +43,54 @@ class SearchActivity : ComponentActivity() {
     private fun initSearchEditText() {
         searchEventsEditText.addTextChangedListener {
             val text = searchEventsEditText.text.toString()
-            searchParamsViewModel.onKeywordChanged(text)
-            searchEvents()
+            filterViewModel.onKeywordChanged(text)
         }
     }
 
-    private fun initSegmentsRecyclerView() {
-        filterAdapter.onSegmentSelected { segment ->
-            searchParamsViewModel.onFilterSelected(segment)
-            searchEvents()
+    private fun initFilters() {
+        initFiltersRecyclerView(
+            classificationFilterRecyclerView,
+            classificationFilterAdapter
+        )
+        initFiltersRecyclerView(
+            sortFilterRecyclerView,
+            sortFilterAdapter
+        )
+        initFiltersRecyclerView(
+            countryCodeRecyclerView,
+            countryCodeFilterAdapter
+        )
+    }
+
+    private fun initFiltersRecyclerView(
+        filterRecyclerView: RecyclerView,
+        filtersAdapter: FiltersAdapter
+    ) {
+        filtersAdapter.onFilterSelected { filter ->
+            filterViewModel.onFilterSelected(filter)
         }
-        segmentRecyclerView.adapter = filterAdapter
-        segmentRecyclerView.addItemDecoration(FilterDecorator())
-        segmentRecyclerView.layoutManager = LinearLayoutManager(
+        filterRecyclerView.adapter = filtersAdapter
+        filterRecyclerView.addItemDecoration(FilterDecorator())
+        filterRecyclerView.layoutManager = LinearLayoutManager(
             this,
             LinearLayoutManager.HORIZONTAL,
             false,
         )
     }
 
-    private fun searchEvents() {
-        val eventQuery = searchParamsViewModel.eventQuery.value ?: return
-        searchViewModel.searchEvents(eventQuery)
+
+    private fun observeEventQuery() {
+        filterViewModel.getFilterQuery().observe(this) {
+            searchViewModel.searchEvents(it)
+        }
     }
 
+
     private fun initSegmentsState() {
-        searchParamsViewModel.getFilters().observe(this) {
-            filterAdapter.updateItems(it)
+        filterViewModel.getFilterQuery().observe(this) {
+            classificationFilterAdapter.updateItems(it.classificationFilters)
+            sortFilterAdapter.updateItems(it.sortFilters)
+            countryCodeFilterAdapter.updateItems(it.countryCodeFilters)
         }
     }
 
