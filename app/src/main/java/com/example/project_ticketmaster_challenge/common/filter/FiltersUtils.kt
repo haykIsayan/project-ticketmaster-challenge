@@ -4,7 +4,6 @@ import com.example.project_ticketmaster_challenge.model.filter.FilterModel
 import com.example.project_ticketmaster_challenge.model.filter.FilterType
 
 object FiltersUtils {
-
     val defaultClassificationFilters = listOf(
         FilterModel(
             type = FilterType.classification,
