@@ -1,24 +1,47 @@
 package com.example.project_ticketmaster_challenge.ui.discover
 
 import android.view.View
-import android.widget.TextView
-import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.project_ticketmaster_challenge.R
-import com.example.project_ticketmaster_challenge.model.EventModel
+import com.example.project_ticketmaster_challenge.common.DateUtils
+import com.example.project_ticketmaster_challenge.model.event.EventModel
+import kotlinx.android.synthetic.main.discover_item_view.view.*
 
 class DiscoverItemViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     fun bindEvent(event: EventModel) {
-        itemView.findViewById<TextView>(R.id.discoverEventNameTextView).text = event.name
-        itemView.findViewById<TextView>(R.id.discoverEventTypeTextView).text = event.type
-        val images = event.images
+        itemView.discoverEventNameTextView.text = event.name
+        initEventClassification(event)
+        initEventDate(event)
+        initEventImage(event)
+    }
+
+    private fun initEventClassification(event: EventModel) {
+        val classifications = event.classifications
+        if (classifications.isNullOrEmpty()) return
+        val segment = classifications.first().segment ?: return
+        itemView.apply {
+            discoverEventClassificationTextView.visibility = View.VISIBLE
+            discoverEventClassificationTextView.text = segment.name
+        }
+    }
+
+    private fun initEventDate(event: EventModel)  {
+        val dates = event.dates ?: return
+        val startDate = dates.start?.localDate
+        if (startDate.isNullOrEmpty()) return
+        itemView.apply {
+            discoverEventDateTextView.visibility = View.VISIBLE
+            discoverEventDateTextView.text = DateUtils.dateFormat(startDate)
+        }
+    }
+
+    private fun initEventImage(event: EventModel) {
+        val images = event.images ?: return
         if (images.isNotEmpty()) {
-            val imageView = itemView.findViewById<AppCompatImageView>(R.id.discoverEventImageView)
             Glide.with(itemView)
                 .load(event.images.first().url)
                 .centerCrop()
-                .into(imageView)
+                .into(itemView.discoverEventImageView)
         }
     }
 }

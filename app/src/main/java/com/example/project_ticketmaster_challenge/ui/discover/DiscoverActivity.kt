@@ -7,9 +7,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_ticketmaster_challenge.R
-import com.example.project_ticketmaster_challenge.model.EventModel
-import com.example.project_ticketmaster_challenge.ui.ViewModelState
-import com.example.project_ticketmaster_challenge.ui.ViewModelState.*
+import com.example.project_ticketmaster_challenge.model.event.EventModel
+import com.example.project_ticketmaster_challenge.common.view_model.ViewModelState
+import com.example.project_ticketmaster_challenge.common.view_model.ViewModelState.*
 import com.example.project_ticketmaster_challenge.ui.search.SearchActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_discover.*
@@ -38,6 +38,7 @@ class DiscoverActivity : ComponentActivity() {
     }
 
     private fun initDiscoverEventsState() {
+        discoverViewModel.loadDiscoverEvents()
         discoverViewModel.getDiscoverState().observe(
             this,
             ::onDiscoverEventsState,
@@ -47,13 +48,23 @@ class DiscoverActivity : ComponentActivity() {
     private fun onDiscoverEventsState(state: ViewModelState<List<EventModel>>) {
         when (state) {
             is ViewModelStateError -> onStateError()
+            is ViewModelStateEmpty -> onStateEmpty()
             is ViewModelStateIdle -> onStateIdle(state)
             is ViewModelStatePending -> onStatePending()
         }
     }
 
-    private fun onStateError() {
+    private fun onStateError() = displayNoEventsTextView(
+        resources.getString(R.string.events_load_error_message)
+    )
+
+    private fun onStateEmpty() = displayNoEventsTextView(
+        resources.getString(R.string.events_load_empty_message)
+    )
+
+    private fun displayNoEventsTextView(message: String) {
         noEventsTextView.visibility = View.VISIBLE
+        noEventsTextView.text = message
         discoverEventsRecyclerView.visibility = View.GONE
         discoverEventsLoadingIndicator.visibility = View.GONE
     }

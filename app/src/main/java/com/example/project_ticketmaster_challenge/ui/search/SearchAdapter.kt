@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project_ticketmaster_challenge.R
-import com.example.project_ticketmaster_challenge.model.EventModel
+import com.example.project_ticketmaster_challenge.model.event.EventModel
 
 class SearchAdapter : RecyclerView.Adapter<SearchItemViewHolder>() {
 
@@ -20,7 +20,7 @@ class SearchAdapter : RecyclerView.Adapter<SearchItemViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchItemViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(
-            R.layout.search_event_item_view,
+            R.layout.search_item_view,
             parent,
             false,
         )

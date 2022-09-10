@@ -1,9 +1,12 @@
 package com.example.project_ticketmaster_challenge.data
 
-import com.example.project_ticketmaster_challenge.model.EventModel
+import com.example.project_ticketmaster_challenge.model.event.EventModel
 
 interface TicketmasterRepository {
-    suspend fun getDiscoveryEvents(): List<EventModel>
-
-    suspend fun searchDiscoveryEvents(query: String): List<EventModel>
+    suspend fun getDiscoveryEvents(
+        keyword: String?,
+        classificationId: String?,
+        countryCode: String?,
+        sort: String?
+    ): List<EventModel>
 }

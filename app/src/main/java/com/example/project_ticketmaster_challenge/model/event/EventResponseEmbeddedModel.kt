@@ -1,11 +1,7 @@
-package com.example.project_ticketmaster_challenge.model
+package com.example.project_ticketmaster_challenge.model.event
 
 import android.os.Parcel
 import android.os.Parcelable
-
-
-//"_embedded": {
-//    "events
 
 data class EventResponseEmbeddedModel(val events: List<EventModel>): Parcelable {
     constructor(parcel: Parcel) : this(parcel.createTypedArrayList(EventModel) ?: emptyList()) {
