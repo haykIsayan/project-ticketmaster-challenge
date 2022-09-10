@@ -5,13 +5,17 @@ import com.example.project_ticketmaster_challenge.model.filter.FilterType
 
 object FiltersUtils {
 
-
     val defaultClassificationFilters = listOf(
         FilterModel(
             type = FilterType.classification,
-            value = FilterClassificationValues.sportsClassificationValue,
-            name = "Sports",
+            value = null,
+            name = "All",
             isApplied = true
+        ),
+        FilterModel(
+            type = FilterType.classification,
+            value = FilterClassificationValues.sportsClassificationValue,
+            name = "Sports"
         ),
         FilterModel(
             type = FilterType.classification,
@@ -57,9 +61,14 @@ object FiltersUtils {
     val defaultCountryCodeFilters = listOf(
         FilterModel(
             type = FilterType.countryCode,
-            value = "US",
-            name = "United States of America",
+            value = null,
+            name = "All",
             isApplied = true
+        ),
+        FilterModel(
+            type = FilterType.countryCode,
+            value = "US",
+            name = "United States of America"
         ),
         FilterModel(
             type = FilterType.countryCode,
