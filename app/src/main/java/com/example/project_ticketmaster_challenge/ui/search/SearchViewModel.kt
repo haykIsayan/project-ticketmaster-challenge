@@ -1,13 +1,10 @@
 package com.example.project_ticketmaster_challenge.ui.search
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import com.example.project_ticketmaster_challenge.common.view_model.LoadStateViewModel
 import com.example.project_ticketmaster_challenge.model.event.EventModel
 import com.example.project_ticketmaster_challenge.model.filter.FilterQueryModel
-import com.example.project_ticketmaster_challenge.common.ViewModelState
-import com.example.project_ticketmaster_challenge.common.ViewModelState.*
+import com.example.project_ticketmaster_challenge.common.view_model.ViewModelState
 import com.example.project_ticketmaster_challenge.interactor.SearchEventsInteractor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
@@ -21,29 +18,20 @@ class SearchViewModel @Inject constructor(
     @Named("mainDispatcher")
     private val mainDispatcher: CoroutineDispatcher = Dispatchers.Main,
     private val searchEventsInteractor: SearchEventsInteractor
-): ViewModel() {
+): LoadStateViewModel<List<EventModel>>(mainDispatcher, ioDispatcher) {
 
-    private val searchState = MutableLiveData<ViewModelState<List<EventModel>>>()
-    fun getSearchState(): LiveData<ViewModelState<List<EventModel>>> = searchState
+    fun getSearchState(): LiveData<ViewModelState<List<EventModel>>> = getState()
 
     private var searchJob: Job? = Job()
 
     fun searchEvents(filterQuery: FilterQueryModel, debounce: Boolean = true) {
         searchJob?.cancel()
-        searchJob = viewModelScope.launch(mainDispatcher) {
-            try {
-                searchState.value = ViewModelStatePending()
-                if (debounce) delay(500)
-                val events = withContext(ioDispatcher) { searchEventsInteractor.execute(filterQuery) }
-                searchState.value = if (events.isNotEmpty()) {
-                    ViewModelStateIdle(events)
-                } else {
-                    ViewModelStateEmpty()
-                }
-            } catch (e: Exception) {
-                println(e.message)
-                searchState.value = ViewModelStateError(e.message)
-            }
+        searchJob = loadState(
+            delayTime = if (debounce) 500 else 0
+        ) {
+            searchEventsInteractor.execute(filterQuery)
         }
     }
+
+    override fun isDataEmpty(data: List<EventModel>) = data.isEmpty()
 }

@@ -3,8 +3,8 @@ package com.example.project_ticketmaster_challenge.ui.search
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.example.project_ticketmaster_challenge.TestUtils
-import com.example.project_ticketmaster_challenge.common.ViewModelState
-import com.example.project_ticketmaster_challenge.common.ViewModelState.*
+import com.example.project_ticketmaster_challenge.common.view_model.ViewModelState
+import com.example.project_ticketmaster_challenge.common.view_model.ViewModelState.*
 import com.example.project_ticketmaster_challenge.interactor.SearchEventsInteractor
 import com.example.project_ticketmaster_challenge.model.event.EventModel
 import com.example.project_ticketmaster_challenge.model.filter.FilterQueryModel

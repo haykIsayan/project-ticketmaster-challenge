@@ -8,8 +8,8 @@ import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_ticketmaster_challenge.R
 import com.example.project_ticketmaster_challenge.model.event.EventModel
-import com.example.project_ticketmaster_challenge.common.ViewModelState
-import com.example.project_ticketmaster_challenge.common.ViewModelState.*
+import com.example.project_ticketmaster_challenge.common.view_model.ViewModelState
+import com.example.project_ticketmaster_challenge.common.view_model.ViewModelState.*
 import com.example.project_ticketmaster_challenge.ui.search.SearchActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_discover.*
