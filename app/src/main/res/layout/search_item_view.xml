@@ -23,7 +23,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:textColor="@color/white"
-            android:maxLines="1"
+            android:singleLine="true"
+            android:ellipsize="marquee"
             android:textSize="16sp"
             tools:text="Phoenix Suns vs. Golden State Warriors"/>
 
