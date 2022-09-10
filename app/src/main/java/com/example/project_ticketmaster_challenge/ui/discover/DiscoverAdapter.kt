@@ -18,7 +18,7 @@ class DiscoverAdapter: RecyclerView.Adapter<DiscoverItemViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DiscoverItemViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(
-            R.layout.discover_event_item_view,
+            R.layout.discover_item_view,
             parent,
             false,
         )

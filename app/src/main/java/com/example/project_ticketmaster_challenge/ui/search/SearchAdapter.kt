@@ -20,7 +20,7 @@ class SearchAdapter : RecyclerView.Adapter<SearchItemViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchItemViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(
-            R.layout.search_event_item_view,
+            R.layout.search_item_view,
             parent,
             false,
         )

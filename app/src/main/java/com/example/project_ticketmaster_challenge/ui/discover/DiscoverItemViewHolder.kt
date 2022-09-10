@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.project_ticketmaster_challenge.common.DateUtils
 import com.example.project_ticketmaster_challenge.model.event.EventModel
-import kotlinx.android.synthetic.main.discover_event_item_view.view.*
+import kotlinx.android.synthetic.main.discover_item_view.view.*
 
 class DiscoverItemViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     fun bindEvent(event: EventModel) {

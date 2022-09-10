@@ -5,12 +5,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.project_ticketmaster_challenge.common.DateUtils
 import com.example.project_ticketmaster_challenge.model.event.EventModel
-import kotlinx.android.synthetic.main.search_event_item_view.view.*
+import kotlinx.android.synthetic.main.search_item_view.view.*
 
 class SearchItemViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
     fun bindEvent(event: EventModel) {
-        itemView.searchEventName.text = event.name
+        itemView.searchEventNameTextView.text = event.name
         initEventClassification(event)
         initEventStartDate(event)
         initEventImage(event)
