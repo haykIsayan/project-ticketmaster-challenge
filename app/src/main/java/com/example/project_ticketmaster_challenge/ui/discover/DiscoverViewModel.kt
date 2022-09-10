@@ -35,7 +35,11 @@ class DiscoverViewModel @Inject constructor(
             try {
                 discoverState.value = ViewModelStatePending()
                 val events = withContext(ioDispatcher) { searchEventsInteractor.execute(FilterQueryModel()) }
-                discoverState.value = ViewModelStateIdle(events)
+                discoverState.value = if (events.isNotEmpty()) {
+                    ViewModelStateIdle(events)
+                } else {
+                    ViewModelStateEmpty()
+                }
             } catch (e: Exception) {
                 println(e.message)
                 discoverState.value = ViewModelStateError(e.message)

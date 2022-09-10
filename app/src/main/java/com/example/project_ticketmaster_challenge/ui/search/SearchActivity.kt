@@ -118,13 +118,23 @@ class SearchActivity : ComponentActivity() {
     private fun onSearchState(state: ViewModelState<List<EventModel>>) {
         when (state) {
             is ViewModelStateError -> onStateError()
+            is ViewModelStateEmpty -> onStateEmpty()
             is ViewModelStateIdle -> onStateIdle(state)
             is ViewModelStatePending -> onStatePending()
         }
     }
 
-    private fun onStateError() {
+    private fun onStateError() = displayNoSearchResultsTextView(
+        resources.getString(R.string.events_load_error_message)
+    )
+
+    private fun onStateEmpty() = displayNoSearchResultsTextView(
+        resources.getString(R.string.events_load_empty_message)
+    )
+
+    private fun displayNoSearchResultsTextView(message: String) {
         noSearchResultsTextView.visibility = View.VISIBLE
+        noSearchResultsTextView.text = message
         searchEventsRecyclerView.visibility = View.GONE
         searchLoadingIndicator.visibility = View.GONE
     }

@@ -4,6 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.example.project_ticketmaster_challenge.TestUtils
 import com.example.project_ticketmaster_challenge.common.ViewModelState
+import com.example.project_ticketmaster_challenge.common.ViewModelState.*
 import com.example.project_ticketmaster_challenge.interactor.SearchEventsInteractor
 import com.example.project_ticketmaster_challenge.model.event.EventModel
 import com.example.project_ticketmaster_challenge.model.filter.FilterQueryModel
@@ -50,8 +51,8 @@ class SearchViewModelTest {
         coVerify { mockSearchEventsInteractor.execute(FilterQueryModel()) }
 
         verifySequence {
-            mockObserver.onChanged(ViewModelState.ViewModelStatePending())
-            mockObserver.onChanged(ViewModelState.ViewModelStateIdle(TestUtils.mockEvents))
+            mockObserver.onChanged(ViewModelStatePending())
+            mockObserver.onChanged(ViewModelStateIdle(TestUtils.mockEvents))
         }
     }
 
@@ -66,8 +67,24 @@ class SearchViewModelTest {
         coVerify { mockSearchEventsInteractor.execute(FilterQueryModel()) }
 
         verifySequence {
-            mockObserver.onChanged(ViewModelState.ViewModelStatePending())
-            mockObserver.onChanged(ViewModelState.ViewModelStateError())
+            mockObserver.onChanged(ViewModelStatePending())
+            mockObserver.onChanged(ViewModelStateError())
+        }
+    }
+
+    @Test
+    fun `when search events interactor returns empty, emits pending and empty states`() = runBlocking {
+        coEvery {
+            mockSearchEventsInteractor.execute(FilterQueryModel())
+        }.returns(emptyList())
+
+        viewModel.searchEvents(FilterQueryModel(), false)
+
+        coVerify { mockSearchEventsInteractor.execute(FilterQueryModel()) }
+
+        verifySequence {
+            mockObserver.onChanged(ViewModelStatePending())
+            mockObserver.onChanged(ViewModelStateEmpty())
         }
     }
 }

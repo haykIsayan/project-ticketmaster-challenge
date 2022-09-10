@@ -48,13 +48,23 @@ class DiscoverActivity : ComponentActivity() {
     private fun onDiscoverEventsState(state: ViewModelState<List<EventModel>>) {
         when (state) {
             is ViewModelStateError -> onStateError()
+            is ViewModelStateEmpty -> onStateEmpty()
             is ViewModelStateIdle -> onStateIdle(state)
             is ViewModelStatePending -> onStatePending()
         }
     }
 
-    private fun onStateError() {
+    private fun onStateError() = displayNoEventsTextView(
+        resources.getString(R.string.events_load_error_message)
+    )
+
+    private fun onStateEmpty() = displayNoEventsTextView(
+        resources.getString(R.string.events_load_empty_message)
+    )
+
+    private fun displayNoEventsTextView(message: String) {
         noEventsTextView.visibility = View.VISIBLE
+        noEventsTextView.text = message
         discoverEventsRecyclerView.visibility = View.GONE
         discoverEventsLoadingIndicator.visibility = View.GONE
     }

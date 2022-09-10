@@ -71,4 +71,20 @@ class DiscoverViewModelTest {
             mockObserver.onChanged(ViewModelStateError())
         }
     }
+
+    @Test
+    fun `when search events interactor returns empty, emits pending and empty states`() = runBlocking {
+        coEvery {
+            mockSearchEventsInteractor.execute(FilterQueryModel())
+        }.returns(emptyList())
+
+        viewModel.loadDiscoverEvents()
+
+        coVerify { mockSearchEventsInteractor.execute(FilterQueryModel()) }
+
+        verifySequence {
+            mockObserver.onChanged(ViewModelStatePending())
+            mockObserver.onChanged(ViewModelStateEmpty())
+        }
+    }
 }

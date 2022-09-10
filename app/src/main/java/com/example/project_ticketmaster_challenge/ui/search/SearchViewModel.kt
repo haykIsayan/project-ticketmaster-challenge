@@ -35,7 +35,11 @@ class SearchViewModel @Inject constructor(
                 searchState.value = ViewModelStatePending()
                 if (debounce) delay(500)
                 val events = withContext(ioDispatcher) { searchEventsInteractor.execute(filterQuery) }
-                searchState.value = ViewModelStateIdle(events)
+                searchState.value = if (events.isNotEmpty()) {
+                    ViewModelStateIdle(events)
+                } else {
+                    ViewModelStateEmpty()
+                }
             } catch (e: Exception) {
                 println(e.message)
                 searchState.value = ViewModelStateError(e.message)
