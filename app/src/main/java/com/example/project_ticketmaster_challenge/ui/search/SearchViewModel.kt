@@ -12,9 +12,14 @@ import com.example.project_ticketmaster_challenge.interactor.SearchEventsInterac
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import javax.inject.Inject
+import javax.inject.Named
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
+    @Named("ioDispatcher")
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
+    @Named("mainDispatcher")
+    private val mainDispatcher: CoroutineDispatcher = Dispatchers.Main,
     private val searchEventsInteractor: SearchEventsInteractor
 ): ViewModel() {
 
@@ -23,17 +28,17 @@ class SearchViewModel @Inject constructor(
 
     private var searchJob: Job? = Job()
 
-    fun searchEvents(filterQuery: FilterQueryModel) { // todo write a unit test
+    fun searchEvents(filterQuery: FilterQueryModel, debounce: Boolean = true) {
         searchJob?.cancel()
-        searchJob = viewModelScope.launch(Dispatchers.IO) {
+        searchJob = viewModelScope.launch(mainDispatcher) {
             try {
-                withContext(Dispatchers.Main) { searchState.value = ViewModelStatePending() }
-                delay(500)
-                val events = searchEventsInteractor.execute(filterQuery)
-                withContext(Dispatchers.Main) { searchState.value = ViewModelStateIdle(events) }
+                searchState.value = ViewModelStatePending()
+                if (debounce) delay(500)
+                val events = withContext(ioDispatcher) { searchEventsInteractor.execute(filterQuery) }
+                searchState.value = ViewModelStateIdle(events)
             } catch (e: Exception) {
                 println(e.message)
-                withContext(Dispatchers.Main) { searchState.value = ViewModelStateError(e.message) }
+                searchState.value = ViewModelStateError(e.message)
             }
         }
     }
