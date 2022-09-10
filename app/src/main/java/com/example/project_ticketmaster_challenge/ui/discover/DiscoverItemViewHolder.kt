@@ -3,6 +3,7 @@ package com.example.project_ticketmaster_challenge.ui.discover
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.project_ticketmaster_challenge.common.DateUtils
 import com.example.project_ticketmaster_challenge.model.event.EventModel
 import kotlinx.android.synthetic.main.discover_event_item_view.view.*
 
@@ -30,7 +31,7 @@ class DiscoverItemViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) 
         if (startDate.isNullOrEmpty()) return
         itemView.apply {
             discoverEventDateTextView.visibility = View.VISIBLE
-            discoverEventDateTextView.text = startDate
+            discoverEventDateTextView.text = DateUtils.dateFormat(startDate)
         }
     }
 

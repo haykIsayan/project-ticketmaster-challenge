@@ -3,6 +3,7 @@ package com.example.project_ticketmaster_challenge.ui.search
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.project_ticketmaster_challenge.common.DateUtils
 import com.example.project_ticketmaster_challenge.model.event.EventModel
 import kotlinx.android.synthetic.main.search_event_item_view.view.*
 
@@ -31,7 +32,7 @@ class SearchItemViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         if (startDate.isNullOrEmpty()) return
         itemView.apply {
             searchEventDateTextView.visibility = View.VISIBLE
-            searchEventDateTextView.text = startDate
+            searchEventDateTextView.text = DateUtils.dateFormat(startDate)
         }
     }
 
